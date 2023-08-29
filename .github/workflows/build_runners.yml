@@ -1,0 +1,81 @@
+name: Azure Customer Infrastructure
+
+on:
+  workflow_dispatch:
+    inputs:
+      tfaction:
+        type: choice
+        description: Terraform Action
+        options: 
+        - apply
+        - destroy
+
+env:
+  terraform_directory: "${{github.workspace}}"
+  ARM_CLIENT_ID: ${{secrets.AZ_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.AZ_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.AZ_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.AZ_TENANT_ID}}
+
+jobs:
+  build:
+    name: "Terraform Build"
+    if: "${{github.event.inputs.tfaction == 'apply'}}"
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+      repository-projects: read
+
+    defaults:
+      run:
+        working-directory: ${{env.terraform_directory}}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+    
+      - name: Setup `terraform`
+        uses: hashicorp/setup-terraform@v2
+    
+      - name: Terraform Init
+        id: init
+        run: "terraform init -input=false -backend-config=key=${{env.TF_VAR_customerid}}.terraform.tfstate"
+    
+      - name: Terraform Validate
+        id: validate
+        run: "terraform validate -no-color"
+    
+      - name: Terraform Apply
+        id: apply
+        run: "terraform apply -auto-approve"
+  
+  teardown:
+    name: "Terraform Destroy"
+    if: "${{github.event.inputs.tfaction == 'destroy'}}"
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+      repository-projects: read
+    
+    defaults:
+      run:
+        working-directory: ${{env.terraform_directory}}
+  
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+    
+      - name: Setup `terraform`
+        uses: hashicorp/setup-terraform@v2
+    
+      - name: Terraform Init
+        id: init
+        run: "terraform init -input=false -backend-config=key=${{env.TF_VAR_customerid}}.terraform.tfstate"
+      
+      - name: Terraform Destroy
+        id: destroy
+        run: "terraform destroy -auto-approve"
