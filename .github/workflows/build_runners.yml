@@ -42,7 +42,7 @@ jobs:
     
       - name: Terraform Init
         id: init
-        run: "terraform init -input=false -backend-config=key=${{env.TF_VAR_customerid}}.terraform.tfstate"
+        run: "terraform init -input=false -backend-config=key=ucgithubrunners.terraform.tfstate"
     
       - name: Terraform Validate
         id: validate
