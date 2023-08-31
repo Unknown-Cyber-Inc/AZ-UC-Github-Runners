@@ -31,6 +31,24 @@ resource "azurerm_container_group" "example" {
 
   
   container {
+    name   = "uc-coreinfra-github-runner"
+    image  = "myoung34/github-runner"
+    cpu    = "0.5"
+    memory = "1.5"
+    environment_variables = {
+        "RUNNER_NAME"  = uc-core-github-runner
+        "RUNNER_TOKEN" = BBSWHMUUHIZNF2OWIHYRA6DE5VLLM
+        "ORG_NAME"     = Unknown-Cyber-Inc
+        "REPO_URL"     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Core-Infra"
+    }
+  
+    ports {
+      port     = 443
+      protocol = "TCP"
+    }
+  }
+
+  container {
     name   = "uc-custinfra-github-runner"
     image  = "myoung34/github-runner"
     cpu    = "0.5"
@@ -41,13 +59,13 @@ resource "azurerm_container_group" "example" {
         "ORG_NAME"     = Unknown-Cyber-Inc
         "REPO_URL"     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Cust-Infra"
     }
-  }
-
+  
     ports {
       port     = 443
       protocol = "TCP"
     }
-  
+  }
+
   tags = {
     environment = "testing"
   }
