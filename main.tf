@@ -21,7 +21,7 @@ data "azurerm_subnet" "example" {
   resource_group_name  = "virusbattle-production"
 }
 
-resource "azurerm_container_group" "example" {
+resource "azurerm_container_group" "acg_core" {
   name                = "aci-uc-core-github-runners"
   location            = data.azurerm_resource_group.example.location
   resource_group_name = data.azurerm_resource_group.example.name
@@ -51,7 +51,7 @@ resource "azurerm_container_group" "example" {
   }
 }
 
-resource "azurerm_container_group" "example" {
+resource "azurerm_container_group" "acg_cust" {
   name                = "aci-uc-cust-github-runners"
   location            = data.azurerm_resource_group.example.location
   resource_group_name = data.azurerm_resource_group.example.name
