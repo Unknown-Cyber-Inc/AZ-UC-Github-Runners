@@ -36,9 +36,9 @@ resource "azurerm_container_group" "example" {
     cpu    = "0.5"
     memory = "1.5"
     environment_variables = {
-        "RUNNER_NAME"  = az-uc-core-infra-github-runner
-        "RUNNER_TOKEN" = BBSWHMUUHIZNF2OWIHYRA6DE5VLLM
-        "ORG_NAME"     = Unknown-Cyber-Inc
+        "RUNNER_NAME"  = "az-uc-core-infra-github-runner"
+        "RUNNER_TOKEN" = "BBSWHMUUHIZNF2OWIHYRA6DE5VLLM"
+        "ORG_NAME"     = "Unknown-Cyber-Inc"
         "REPO_URL"     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Core-Infra"
     }
   
@@ -54,9 +54,9 @@ resource "azurerm_container_group" "example" {
     cpu    = "0.5"
     memory = "1.5"
     environment_variables = {
-        "RUNNER_NAME"  = az-uc-cust-infra-github-runner
-        "RUNNER_TOKEN" = BBSWHMSMOVOGCCL6CEG62JDE5VO4O
-        "ORG_NAME"     = Unknown-Cyber-Inc
+        "RUNNER_NAME"  = "az-uc-cust-infra-github-runner"
+        "RUNNER_TOKEN" = "BBSWHMSMOVOGCCL6CEG62JDE5VO4O"
+        "ORG_NAME"     = "Unknown-Cyber-Inc"
         "REPO_URL"     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Cust-Infra"
     }
   
