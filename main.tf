@@ -26,7 +26,7 @@ resource "azurerm_container_group" "example" {
   location            = data.azurerm_resource_group.example.location
   resource_group_name = data.azurerm_resource_group.example.name
   ip_address_type     = "Private"
-  subnet_ids          = data.azurerm_subnet.example.id
+  subnet_ids          = data.azurerm_subnet.example.id[0]
   os_type             = "Linux"
 
   
