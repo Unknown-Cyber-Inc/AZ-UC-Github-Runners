@@ -22,14 +22,13 @@ data "azurerm_subnet" "example" {
 }
 
 resource "azurerm_container_group" "example" {
-  name                = "aci-uc-github-runners"
+  name                = "aci-uc-core-github-runners"
   location            = data.azurerm_resource_group.example.location
   resource_group_name = data.azurerm_resource_group.example.name
   ip_address_type     = "Private"
   subnet_ids          = [data.azurerm_subnet.example.id]
   os_type             = "Linux"
 
-  
   container {
     name   = "uc-coreinfra-github-runner"
     image  = "myoung34/github-runner"
@@ -47,6 +46,18 @@ resource "azurerm_container_group" "example" {
       protocol = "TCP"
     }
   }
+  tags = {
+    environment = "testing"
+  }
+}
+
+resource "azurerm_container_group" "example" {
+  name                = "aci-uc-cust-github-runners"
+  location            = data.azurerm_resource_group.example.location
+  resource_group_name = data.azurerm_resource_group.example.name
+  ip_address_type     = "Private"
+  subnet_ids          = [data.azurerm_subnet.example.id]
+  os_type             = "Linux"
 
   container {
     name   = "uc-custinfra-github-runner"
