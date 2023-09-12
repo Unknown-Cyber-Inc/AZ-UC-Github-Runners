@@ -18,7 +18,7 @@ data "azurerm_resource_group" "example" {
 data "azurerm_subnet" "example" {
   name                 = "Github-runners"
   virtual_network_name = "production-vnet"
-  resource_group_name  = data.azurerm_resource_group.example.name
+  resource_group_name  = "virusbattle-production"
 }
 
 resource "azurerm_container_group" "example" {
