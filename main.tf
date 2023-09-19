@@ -48,6 +48,7 @@ resource "azurerm_container_group" "acg_core" {
         "RUNNER_TOKEN" = "BBSWHMVKB53MBB7J3RUPHDTE7677O"
         "ORG_NAME"     = "Unknown-Cyber-Inc"
         "REPO_URL"     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Core-Infra"
+        "EPHEMERAL"      = true
     }
   
     ports {
