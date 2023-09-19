@@ -20,34 +20,35 @@ terraform {
   }
 }
 
-data "azurerm_resource_group" "example" {
+data "azurerm_resource_group" "ucgithubrunnerrg" {
   name = "virusbattle-gitlab-runners"
 }
 
-data "azurerm_subnet" "example" {
+data "azurerm_subnet" "ucgithubrunnersubnet" {
   name                 = "Github-runners"
   virtual_network_name = "production-vnet"
   resource_group_name  = "virusbattle-production"
 }
 
-resource "azurerm_container_group" "acg_core" {
-  name                = "aci-uc-core-github-runners"
-  location            = data.azurerm_resource_group.example.location
-  resource_group_name = data.azurerm_resource_group.example.name
+resource "azurerm_container_group" "acg" {
+  for_each = var.containers
+  name                = each.value.acg_name
+  location            = data.azurerm_resource_group.ucgithubrunnerrg.location
+  resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
   ip_address_type     = "Private"
-  subnet_ids          = [data.azurerm_subnet.example.id]
+  subnet_ids          = [data.azurerm_subnet.ucgithubrunnersubnet.id]
   os_type             = "Linux"
 
   container {
-    name   = "uc-coreinfra-github-runner"
-    image  = "myoung34/github-runner:2.308.0"
+    name   = each.value.runner_name
+    image  = each.value.dockerimage
     cpu    = "0.5"
     memory = "1.5"
     environment_variables = {
-        "RUNNER_NAME"  = "az-uc-core-infra-github-runner"
-        "RUNNER_TOKEN" = "BBSTPEKTEJ2BKFB2YR6I4ADFBG7OQ"
+        "RUNNER_NAME"  = each.value.runner_name
+        "RUNNER_TOKEN" = each.value.runner_token
         "ORG_NAME"     = "Unknown-Cyber-Inc"
-        "REPO_URL"     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Core-Infra"
+        "REPO_URL"     = each.value.repo_url
     }
   
     ports {
@@ -55,37 +56,6 @@ resource "azurerm_container_group" "acg_core" {
       protocol = "TCP"
     }
   }
-  tags = {
-    environment = "testing"
-  }
-}
-
-resource "azurerm_container_group" "acg_cust" {
-  name                = "aci-uc-cust-github-runners"
-  location            = data.azurerm_resource_group.example.location
-  resource_group_name = data.azurerm_resource_group.example.name
-  ip_address_type     = "Private"
-  subnet_ids          = [data.azurerm_subnet.example.id]
-  os_type             = "Linux"
-
-  container {
-    name   = "uc-custinfra-github-runner"
-    image  = "myoung34/github-runner:2.308.0"
-    cpu    = "0.5"
-    memory = "1.5"
-    environment_variables = {
-        "RUNNER_NAME"  = "az-uc-cust-infra-github-runner"
-        "RUNNER_TOKEN" = "BBSWHMU37PD5ZL7HRXLPHSDE77AE6"
-        "ORG_NAME"     = "Unknown-Cyber-Inc"
-        "REPO_URL"     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Cust-Infra"
-    }
-  
-    ports {
-      port     = 443
-      protocol = "TCP"
-    }
-  }
-
   tags = {
     environment = "testing"
   }
