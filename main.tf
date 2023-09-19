@@ -41,7 +41,7 @@ resource "azurerm_container_group" "acg" {
 
   container {
     name   = each.value.runner_name
-    image  = each.value.dockerimage
+    image  = each.value.docker_image
     cpu    = "0.5"
     memory = "1.5"
     environment_variables = {
