@@ -31,7 +31,7 @@ resource "azurerm_container_group" "acg_core" {
 
   container {
     name   = "uc-coreinfra-github-runner"
-    image  = "myoung34/github-runner"
+    image  = "myoung34/github-runner:latest"
     cpu    = "0.5"
     memory = "1.5"
     environment_variables = {
@@ -60,7 +60,7 @@ resource "azurerm_container_group" "acg_cust" {
   os_type             = "Linux"
 
   container {
-    name   = "uc-custinfra-github-runner"
+    name   = "uc-custinfra-github-runner:latest"
     image  = "myoung34/github-runner"
     cpu    = "0.5"
     memory = "1.5"
