@@ -30,8 +30,8 @@ data "azurerm_subnet" "ucgithubrunnersubnet" {
   resource_group_name  = "virusbattle-production"
 }
 
-resource "azurerm_container_group" "acg" {
-  for_each = var.containers
+resource "azurerm_container_group" "ucacg" {
+  for_each            = var.containers
   name                = each.value.acg_name
   location            = data.azurerm_resource_group.ucgithubrunnerrg.location
   resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
