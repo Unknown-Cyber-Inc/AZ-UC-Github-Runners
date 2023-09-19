@@ -45,10 +45,9 @@ resource "azurerm_container_group" "acg_core" {
     memory = "1.5"
     environment_variables = {
         "RUNNER_NAME"  = "az-uc-core-infra-github-runner"
-        "RUNNER_TOKEN" = "BBSWHMVKB53MBB7J3RUPHDTE7677O"
+        "RUNNER_TOKEN" = "BBSTPEKTEJ2BKFB2YR6I4ADFBG7OQ"
         "ORG_NAME"     = "Unknown-Cyber-Inc"
         "REPO_URL"     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Core-Infra"
-        "EPHEMERAL"      = true
     }
   
     ports {
