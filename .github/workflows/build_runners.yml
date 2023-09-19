@@ -1,4 +1,4 @@
-name: Azure Customer Infrastructure
+name: Built Github Runner
 
 on:
   workflow_dispatch:
