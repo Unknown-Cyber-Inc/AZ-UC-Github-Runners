@@ -1,4 +1,4 @@
-name: Build Github Runners
+name: Terraform Github Runners
 
 on:
   workflow_dispatch:
@@ -22,7 +22,7 @@ env:
 
 jobs:
   build:
-    name: "Build Runners"
+    name: "Terraform Apply"
     if: "${{github.event.inputs.tfaction == 'apply'}}"
     runs-on: ubuntu-latest
     
@@ -55,7 +55,7 @@ jobs:
         run: "terraform apply -auto-approve"
   
   teardown:
-    name: "Destroy Runners"
+    name: "Terraform Destroy"
     if: "${{github.event.inputs.tfaction == 'destroy'}}"
     runs-on: ubuntu-latest
     
