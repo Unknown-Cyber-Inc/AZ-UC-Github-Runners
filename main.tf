@@ -11,6 +11,15 @@ provider "azurerm" {
   features {}
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "UC-Core-Infra"
+    storage_account_name = "uccoretfstatestorage"
+    container_name       = "uc-az-core-infra-tfstate" # container must exist
+    key                  = "ucgithubrunners.terraform.tfstate"
+  }
+}
+
 data "azurerm_resource_group" "example" {
   name = "virusbattle-gitlab-runners"
 }
