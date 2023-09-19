@@ -1,4 +1,4 @@
-name: Build Github Runner
+name: Build Github Runners
 
 on:
   workflow_dispatch:
