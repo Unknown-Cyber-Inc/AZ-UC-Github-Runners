@@ -20,7 +20,7 @@ env:
 
 jobs:
   build:
-    name: "Terraform Build"
+    name: "Build Runners"
     if: "${{github.event.inputs.tfaction == 'apply'}}"
     runs-on: ubuntu-latest
     
@@ -53,7 +53,7 @@ jobs:
         run: "terraform apply -auto-approve"
   
   teardown:
-    name: "Terraform Destroy"
+    name: "Destroy Runners"
     if: "${{github.event.inputs.tfaction == 'destroy'}}"
     runs-on: ubuntu-latest
     
