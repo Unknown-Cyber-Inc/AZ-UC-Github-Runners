@@ -15,7 +15,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "UC-Core-Infra"
     storage_account_name = "uccoretfstatestorage"
-    container_name       = "uc-az-core-infra-tfstate" # container must exist
+    container_name       = "uc-az-github-runners-tfstate" # container must exist
     key                  = "ucgithubrunners.terraform.tfstate"
   }
 }
