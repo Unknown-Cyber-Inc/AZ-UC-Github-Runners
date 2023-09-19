@@ -46,7 +46,7 @@ resource "azurerm_container_group" "acg" {
     memory = "1.5"
     environment_variables = {
         "RUNNER_NAME"  = each.value.runner_name
-        "RUNNER_TOKEN" = each.value.runner_token
+        "RUNNER_TOKEN" = each.key == "core" ? var.az_uc_core_infra_runner_token : var.az_uc_cust_infra_runner_token
         "ORG_NAME"     = "Unknown-Cyber-Inc"
         "REPO_URL"     = each.value.repo_url
     }
