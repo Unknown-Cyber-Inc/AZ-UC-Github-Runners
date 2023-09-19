@@ -19,7 +19,7 @@ variable "containers" {
       docker_image = "myoung34/github-runner"
       runner_name  = "az-uc-core-infra-github-runner"
       runner_token = "BBSTPEKCZWHZUIQSFLJTUZDFBHDL2"
-      repo_url     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Core-Infra"
+      repo_url     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Cust-Infra"
     }
   }
 }
