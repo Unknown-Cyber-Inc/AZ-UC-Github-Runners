@@ -18,7 +18,7 @@ variable "containers" {
       acg_name     = "acg-uc-cust-github-runners"
       docker_image = "myoung34/github-runner"
       runner_name  = "az-uc-core-infra-github-runner"
-      runner_token = "BBSTPEKTEJ2BKFB2YR6I4ADFBG7OQ"
+      runner_token = "BBSTPEKCZWHZUIQSFLJTUZDFBHDL2"
       repo_url     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Core-Infra"
     }
   }
