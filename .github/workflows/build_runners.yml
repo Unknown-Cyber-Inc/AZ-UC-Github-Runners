@@ -17,8 +17,8 @@ env:
   ARM_SUBSCRIPTION_ID: ${{secrets.AZ_SUBSCRIPTION_ID}}
   ARM_TENANT_ID: ${{secrets.AZ_TENANT_ID}}
   ARM_ACCESS_KEY: ${{secrets.AZ_ARM_ACCESS_KEY}}
-  TF_VAR_az_uc_core_infra_runner_token: ${{secrets.AZ_UC_CORE_INFRA_RUNNER_TOKEN}}
-  TF_VAR_az_uc_cust_infra_runner_token: ${{secrets.AZ_UC_CUST_INFRA_RUNNER_TOKEN}}
+  TF_VAR_az_into365exch_infra_github_runner_token: ${{secrets.AZ_UC_CORE_INFRA_RUNNER_TOKEN}}
+  TF_VAR_az_into365exch_cust_github_runner: ${{secrets.AZ_UC_CUST_INFRA_RUNNER_TOKEN}}
 
 jobs:
   build:

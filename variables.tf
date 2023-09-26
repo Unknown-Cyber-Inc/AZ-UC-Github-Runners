@@ -1,9 +1,9 @@
-variable "az_uc_core_infra_runner_token" {
-    description = "AZ_UC_CORE_INFRA Repo Self Hosted Runner Token"
+variable "az_into365exch_infra_github_runner_token" {
+    description = "az-into365exch-infra Repo Self Hosted Runner Token"
 }
 
-variable "az_uc_cust_infra_runner_token" {
-    description = "AZ_UC_CUST_INFRA Repo Self Hosted Runner Token"
+variable "az_into365exch_cust_github_runner" {
+    description = "az-into365exch-cust Repo Self Hosted Runner Token"
 }
 
 variable "containers" {
