@@ -14,7 +14,7 @@ variable "containers" {
     repo_url      = string
   }))
   default = {
-    "core" = {
+    "infra" = {
       acg_name     = "acg-into365exch-infra-github-runners"
       docker_image = "myoung34/github-runner"
       runner_name  = "az-into365exch-infra-github-runner"
