@@ -15,16 +15,16 @@ variable "containers" {
   }))
   default = {
     "core" = {
-      acg_name     = "acg-uc-core-github-runners"
+      acg_name     = "acg-into365exch-infra-github-runners"
       docker_image = "myoung34/github-runner"
-      runner_name  = "az-uc-core-infra-github-runner"
-      repo_url     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Core-Infra"
+      runner_name  = "az-into365exch-infra-github-runner"
+      repo_url     = "https://github.com/Unknown-Cyber-Inc/az-into365exch-infra"
     }
     "cust" = {
-      acg_name     = "acg-uc-cust-github-runners"
+      acg_name     = "acg-into365exch-cust-github-runners"
       docker_image = "myoung34/github-runner"
-      runner_name  = "az-uc-cust-infra-github-runner"
-      repo_url     = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Cust-Infra"
+      runner_name  = "az-into365exch-cust-github-runner"
+      repo_url     = "https://github.com/Unknown-Cyber-Inc/az-into365exch-cust"
     }
   }
 }
