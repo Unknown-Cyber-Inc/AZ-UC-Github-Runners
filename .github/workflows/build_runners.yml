@@ -44,7 +44,7 @@ jobs:
     
       - name: Terraform Init
         id: init
-        run: "terraform init -input=false -backend-config=key=ucgithubrunners.terraform.tfstate"
+        run: "terraform init -input=false"
     
       - name: Terraform Validate
         id: validate
