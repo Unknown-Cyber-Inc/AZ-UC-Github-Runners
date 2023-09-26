@@ -2,7 +2,7 @@ variable "az_into365exch_infra_github_runner_token" {
     description = "az-into365exch-infra Repo Self Hosted Runner Token"
 }
 
-variable "az_into365exch_cust_github_runner" {
+variable "az_into365exch_cust_github_runner_token" {
     description = "az-into365exch-cust Repo Self Hosted Runner Token"
 }
 
