@@ -13,32 +13,33 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    resource_group_name  = "ucgithubrunnerrg"
+    resource_group_name  = var.az_resource_group
     storage_account_name = "ucgithubrunners"
     container_name       = "ucgithubrunners-tfstate" # container must exist
     key                  = "ucgithubrunners.terraform.tfstate"
   }
 }
 
+#Resource Group For Containers
 data "azurerm_resource_group" "ucgithubrunnerrg" {
-  name = "virusbattle-gitlab-runners"
+  name = var.az_resource_group
 }
 
+#Data About Github Runners Subnet
 data "azurerm_subnet" "ucgithubrunnersubnet" {
-  name                 = "Github-runners"
-  virtual_network_name = "production-vnet"
-  resource_group_name  = "virusbattle-production"
+  name                 = var.az_subnet_name
+  virtual_network_name = var.az_virtual_network_name
+  resource_group_name  = var.az_resource_group
 }
-
 
 resource "azurerm_container_app_environment" "ucacaenv" {
-  name                       = "into365-aca-env"
+  name                       = var.az_container_app_environment
   location                   = data.azurerm_resource_group.ucgithubrunnerrg.location
   resource_group_name        = data.azurerm_resource_group.ucgithubrunnerrg.name
 }
 
 resource "azurerm_container_app" "ucaca" {
-  for_each                     = toset(["infra","cust"])
+  for_each                     = var.ghrunners
   name                         = join("-",["into365exch",each.key,"ghr"])
   container_app_environment_id = azurerm_container_app_environment.ucacaenv.id
   resource_group_name          = data.azurerm_resource_group.ucgithubrunnerrg.name

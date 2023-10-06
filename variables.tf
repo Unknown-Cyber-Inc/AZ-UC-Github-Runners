@@ -1,42 +1,27 @@
-variable "az_into365exch_infra_github_runner_token" {
-    description = "az-into365exch-infra Repo Self Hosted Runner Token"
-}
-
-variable "az_into365exch_cust_github_runner_token" {
-    description = "az-into365exch-cust Repo Self Hosted Runner Token"
-}
-
-#variable "containers" {
-#  type = map(object({
-#    acg_name      = string
-#    docker_image  = string
-#    runner_name   = string
-#    repo_url      = string
-#  }))
-#  default = {
-#    "infra" = {
-#      acg_name     = "acg-into365exch-infra-github-runners"
-#      docker_image = "myoung34/github-runner"
-#      runner_name  = "az-into365exch-infra-github-runner"
-#      repo_url     = "https://github.com/Unknown-Cyber-Inc/az-into365exch-infra"
-#    }
-#    "cust" = {
-#      acg_name     = "acg-into365exch-cust-github-runners"
-#      docker_image = "myoung34/github-runner"
-#      runner_name  = "az-into365exch-cust-github-runner"
-#      repo_url     = "https://github.com/Unknown-Cyber-Inc/az-into365exch-cust"
-#    }
-#  }
-#}
-
 variable "az_acg_name" {
     description = "The Name Of The Azure Container Group"
     default = "acg-into365exch-infra-github-runners"
 }
 
+variable "az_resource_group" {
+  description = "Resource Group For Containers"
+}
+
+variable "az_subnet_name" {
+  description = "The Name Of The Subnet The Containers Will Be Created On"
+}
+
+variable "az_virtual_network_name" {
+  description = "The Name Of The VNET That Contains The Containers Subnet"
+}
+
 variable "aci_docker_image" {
     description = "The Name Of The Image To Use For The Containers"
     default = "myoung34/github-runner"
+}
+
+variable "az_container_app_environment" {
+  description = "The Name Of The Azure Container App Environment"
 }
 
 variable "gh_runner_group_name" {
@@ -55,4 +40,10 @@ variable "gh_runner_org_name" {
 }
 
 variable "access_token" {
+  description = "The Github PAT Token Used To Register The Runners"
+}
+
+variable "ghrunners" {
+  type=set(string)
+  default = toset(["infra","cust"])
 }
