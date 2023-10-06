@@ -39,14 +39,14 @@ resource "azurerm_container_app_environment" "ucacaenv" {
 
 resource "azurerm_container_app" "ucaca" {
   for_each                     = toset(["infra","cust"])
-  name                         = join("-",["az-into365exch",each.key,"github-runner"])
+  name                         = join("-",["into365exch",each.key,"ghr"])
   container_app_environment_id = azurerm_container_app_environment.ucacaenv.id
   resource_group_name          = data.azurerm_resource_group.ucgithubrunnerrg.name
   revision_mode                = "Single"
 
   template {
     container {
-      name   = join("-",["az-into365exch",each.key,"github-runner"])
+      name   = join("-",["into365exch",each.key,"ghr"])
       image  = var.aci_docker_image
       cpu    = 0.25
       memory = "0.5Gi"
