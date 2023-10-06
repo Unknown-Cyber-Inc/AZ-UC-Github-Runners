@@ -67,10 +67,8 @@ locals {
   }
 
   env_vars = {
-    for_each = local.containers
     ACCESS_TOKEN        = var.access_token
     RUNNER_GROUP        = var.gh_runner_scope
-    LABELS              =  each.key
     RUNNER_SCOPE        = var.gh_runner_scope
     ORG_NAME            = var.gh_runner_org_name
     DISABLE_AUTO_UPDATE = "true"
