@@ -30,58 +30,26 @@ data "azurerm_subnet" "ucgithubrunnersubnet" {
   resource_group_name  = "virusbattle-production"
 }
 
-resource "azurerm_container_group" "ucacg" {
-  name                = var.az_acg_name
-  location            = data.azurerm_resource_group.ucgithubrunnerrg.location
-  resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
-  ip_address_type     = "Private"
-  subnet_ids          = [data.azurerm_subnet.ucgithubrunnersubnet.id]
-  os_type             = "Linux"
 
-  #Infra
-  container {
-    name   = "az-into365exch-infra-github-runner"
-    image  = var.aci_docker_image
-    cpu    = "0.5"
-    memory = "1.5"
-    environment_variables = {
-        "RUNNER_NAME"  = "az-into365exch-infra-github-runner"
-        "RUNNER_TOKEN" = var.az_into365exch_infra_github_runner_token
-        "ORG_NAME"     = var.gh_runner_org_name
-        "RUNNER_GROUP" = var.gh_runner_group_name
-        "RUNNER_SCOPE" = var.gh_runner_scope
-        "LABELS"       = "infra"
-    }
-  
-    ports {
-      port     = 443
-      protocol = "TCP"
-    }
-  }
+resource "azurerm_container_app_environment" "ucacaenv" {
+  name                       = "into365-aca-env"
+  location                   = data.azurerm_resource_group.ucgithubrunnerrg.location
+  resource_group_name        = data.azurerm_resource_group.ucgithubrunnerrg.name
+}
 
-  #Customer
-  container {
-    name   = "az-into365exch-cust-github-runner"
-    image  = var.aci_docker_image
-    cpu    = "0.5"
-    memory = "1.5"
-    environment_variables = {
-        "RUNNER_NAME"  = "az-into365exch-cust-github-runner"
-        "RUNNER_TOKEN" = var.az_into365exch_infra_github_runner_token
-        "ORG_NAME"     = var.gh_runner_org_name
-        "RUNNER_GROUP" = var.gh_runner_group_name
-        "RUNNER_SCOPE" = var.gh_runner_scope
-        "LABELS"       = "cust"
-    }
-  
-    ports {
-      port     = 443
-      protocol = "TCP"
-    }
-  }
+resource "azurerm_container_app" "ucaca" {
+  for_each                     = toset(["infra","cust"])
+  name                         = join("-",["az-into365exch",each.key,"github-runner"])
+  container_app_environment_id = azurerm_container_app_environment.ucacaenv.id
+  resource_group_name          = data.azurerm_resource_group.ucgithubrunnerrg.name
+  revision_mode                = "Single"
 
-  
-  tags = {
-    environment = "testing"
+  template {
+    container {
+      name   = join("-",["az-into365exch",each.key,"github-runner"])
+      image  = var.aci_docker_image
+      cpu    = 0.25
+      memory = "0.5Gi"
+    }
   }
 }
