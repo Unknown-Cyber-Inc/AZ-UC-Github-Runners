@@ -67,13 +67,13 @@ locals {
     }
   }
 
-  env_vars = {
+  env_vars = tomap({
     ACCESS_TOKEN        = var.access_token
     RUNNER_GROUP        = var.gh_runner_scope
     RUNNER_SCOPE        = var.gh_runner_scope
     ORG_NAME            = var.gh_runner_org_name
     DISABLE_AUTO_UPDATE = "true"
-  }
+  })
    
 }
 
