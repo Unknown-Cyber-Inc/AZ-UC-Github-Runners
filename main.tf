@@ -51,6 +51,22 @@ resource "azurerm_container_app" "ucaca" {
       cpu    = 0.25
       memory = "0.5Gi"
       env {
+        name = "RUNNER_NAME"
+        value = join("-",["into365exch",each.key,"ghr"])
+      }  
+      env {
+        name = "RUNNER_TOKEN"
+        value = var.az_into365exch_infra_github_runner_token
+      }
+      env {
+        name = "RUNNER_GROUP"
+        value = var.gh_runner_group_name
+      }
+      env {
+        name = "LABELS"
+        value = each.key
+      }
+      env {
         name = "RUNNER_SCOPE"
         value = var.gh_runner_scope
       }
