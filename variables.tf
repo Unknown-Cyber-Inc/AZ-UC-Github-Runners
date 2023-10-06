@@ -42,3 +42,7 @@ variable "gh_runner_org_name" {
 variable "access_token" {
   description = "The Github PAT Token Used To Register The Runners"
 }
+
+variable "ghrsubnetrg"{
+  description = "The Name Of The Resource Group That Contains The Subnet The Github Runner Will Be Running On"
+}

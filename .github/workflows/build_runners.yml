@@ -22,7 +22,7 @@ env:
   TF_VAR_az_container_app_environment: ${{vars.AZ_CONTAINER_APP_ENVIRONMENT}}
   TF_VAR_az_subnet_name: ${{vars.AZ_SUBNET_NAME}}
   TF_VAR_az_virtual_network_name: ${{vars.AZ_VIRTUAL_NETWORK_NAME}}
-
+  TF_VAR_ghrsubnetrg: ${{vars.GHRSUBNETRG}}
 jobs:
   build:
     name: "Terraform Apply"

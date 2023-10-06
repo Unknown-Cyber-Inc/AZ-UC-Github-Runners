@@ -29,7 +29,7 @@ data "azurerm_resource_group" "ucgithubrunnerrg" {
 data "azurerm_subnet" "ucgithubrunnersubnet" {
   name                 = var.az_subnet_name
   virtual_network_name = var.az_virtual_network_name
-  resource_group_name  = data.azurerm_resource_group.ucgithubrunnerrg.name
+  resource_group_name  = var.ghrsubnetrg
 }
 
 resource "azurerm_container_app_environment" "ucacaenv" {
