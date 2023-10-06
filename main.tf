@@ -40,12 +40,12 @@ resource "azurerm_container_group" "ucacg" {
   os_type             = "Linux"
 
   container {
-    name   = join("-","az-into365exch",each.key,"github-runner")
+    name   = join("-",["az-into365exch",each.key,"github-runner"])
     image  = var.aci_docker_image
     cpu    = "0.5"
     memory = "1.5"
     environment_variables = {
-        "RUNNER_NAME"  = join("-","az-into365exch",each.key,"github-runner")
+        "RUNNER_NAME"  = join("-",["az-into365exch",each.key,"github-runner"])
         "RUNNER_TOKEN" = var.az_into365exch_infra_github_runner_token
         "ORG_NAME"     = var.gh_runner_org_name
         "RUNNER_GROUP" = var.gh_runner_group_name
