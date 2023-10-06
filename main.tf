@@ -55,7 +55,7 @@ resource "azurerm_container_app" "ucaca" {
         value = join("-",["into365exch",each.key,"ghr"])
       }  
       env {
-        name = "RUNNER_TOKEN"
+        name = "ACCESS_TOKEN"
         value = var.az_into365exch_infra_github_runner_token
       }
       env {
@@ -75,8 +75,8 @@ resource "azurerm_container_app" "ucaca" {
         value = var.gh_runner_org_name
       }
       env {
-        name = "REPO_URL"
-        value = "https://github.com/Unknown-Cyber-Inc"
+        name = "DISABLE_AUTO_UPDATE"
+        value = "true"
       }
     }
   }
