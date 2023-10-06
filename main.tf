@@ -56,7 +56,7 @@ resource "azurerm_container_app" "ucaca" {
       }  
       env {
         name = "ACCESS_TOKEN"
-        value = var.az_into365exch_infra_github_runner_token
+        value = var.access_token
       }
       env {
         name = "RUNNER_GROUP"

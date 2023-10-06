@@ -53,3 +53,6 @@ variable "gh_runner_org_name" {
     description = "The Name Of The Organization In Github For The Runner"
     default = "Unknown-Cyber-Inc"
 }
+
+variable "access_token" {
+}
