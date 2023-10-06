@@ -51,7 +51,7 @@ locals {
           protocol = "TCP"
         }
       }
-      env =merge(local.env_vars,"LABELS:infra")
+      env =merge(local.env_vars,tomap("LABELS:infra"))
     }
 
     cust = {
