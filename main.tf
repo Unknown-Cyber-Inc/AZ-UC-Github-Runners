@@ -42,25 +42,18 @@ resource "azurerm_container_app_environment" "ucacaenv" {
 locals {
   containers = {
     infra = {
-      image  = var.aci_docker_image
-      cpu    = 0.5
-      memory = 1.5
       ports = {
         https = {
           port     = 443
           protocol = "TCP"
         }
       }
-      env =merge(local.env_vars,{LABELS:"infra"})
     }
 
     cust = {
-      image  = var.aci_docker_image
-      cpu    = 0.5
-      memory = 1.5
       ports = {
         https = {
-          port     = 443
+          port     = 444
           protocol = "TCP"
         }
       }
@@ -69,7 +62,7 @@ locals {
 
   env_vars = {
     ACCESS_TOKEN        : var.access_token
-    RUNNER_GROUP        : var.gh_runner_scope
+    RUNNER_GROUP        : var.gh_runner_group_name
     RUNNER_SCOPE        : var.gh_runner_scope
     ORG_NAME            : var.gh_runner_org_name
     DISABLE_AUTO_UPDATE : "true"
@@ -78,41 +71,41 @@ locals {
 }
 
 
-output cont {
-  value = local.containers
-}
-
-output envs {
-  value = local.env_vars 
-}
-
-
-#resource "azurerm_container_group" "ucacg" {
-#  name                = "into365exch-ghr-acg"
-#  location            = data.azurerm_resource_group.ucgithubrunnerrg.location
-#  resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
-#  ip_address_type     = "Public"
-#  dns_name_label      = "aci-blog"
-#  os_type             = "Linux"
-#
-#  dynamic "container" {
-#    for_each = local.containers
-#
-#    content {
-#      name   = container.key
-#      image  = container.value.image
-#      cpu    = container.value.cpu
-#      memory = container.value.memory
-#
-#      dynamic "ports" {
-#        for_each = can(container.value.ports) ? container.value.ports : {}
-#
-#        content {
-#          port     = ports.value.port
-#          protocol = ports.value.protocol
-#        }
-#
-#      }
-#    }
-#  }
+#output cont {
+#  value = local.containers
 #}
+
+#output envs {
+#  value = local.env_vars 
+#}
+
+
+resource "azurerm_container_group" "ucacg" {
+  name                = var.az_acg_name
+  location            = data.azurerm_resource_group.ucgithubrunnerrg.location
+  resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
+  ip_address_type     = "Private"
+  subnet_ids          = [data.azurerm_subnet.ucgithubrunnersubnet.id]
+  os_type             = "Linux"
+
+  dynamic "container" {
+    for_each = local.containers
+
+    content {
+      name   = join("-",["into365exch",container.key,"ghr"])
+      image  = var.aci_docker_image
+      cpu    = 0.5
+      memory = 1.5
+      environment_variables = merge(local.env_vars,{LABELS:container.key})
+      dynamic "ports" {
+        for_each = can(container.value.ports) ? container.value.ports : {}
+
+        content {
+          port     = ports.value.port
+          protocol = ports.value.protocol
+        }
+
+      }
+    }
+  }
+}
