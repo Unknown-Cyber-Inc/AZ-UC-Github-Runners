@@ -13,7 +13,7 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    resource_group_name  = var.az_resource_group
+    resource_group_name  = "virusbattle-gitlab-runners"
     storage_account_name = "ucgithubrunners"
     container_name       = "ucgithubrunners-tfstate" # container must exist
     key                  = "ucgithubrunners.terraform.tfstate"
