@@ -50,6 +50,14 @@ resource "azurerm_container_app" "ucaca" {
       image  = var.aci_docker_image
       cpu    = 0.25
       memory = "0.5Gi"
+      env {
+        name = "RUNNER_SCOPE"
+        value = var.gh_runner_scope
+      }
+      env {
+        name = "ORG_NAME"
+        value = var.gh_runner_org_name
+      }
     }
   }
 }
