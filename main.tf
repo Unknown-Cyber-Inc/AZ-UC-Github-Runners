@@ -38,47 +38,82 @@ resource "azurerm_container_app_environment" "ucacaenv" {
   resource_group_name        = data.azurerm_resource_group.ucgithubrunnerrg.name
 }
 
-resource "azurerm_container_app" "ucaca" {
-  for_each                     = toset(["infra","cust"])
-  name                         = join("-",["into365exch",each.key,"ghr"])
-  container_app_environment_id = azurerm_container_app_environment.ucacaenv.id
-  resource_group_name          = data.azurerm_resource_group.ucgithubrunnerrg.name
-  revision_mode                = "Single"
-
-  template {
-    container {
-      name   = join("-",["into365exch",each.key,"ghr"])
+#Setup Containers To Create Here
+locals {
+  containers = {
+    infra = {
       image  = var.aci_docker_image
-      cpu    = 0.25
-      memory = "0.5Gi"
-      env {
-        name = "RUNNER_NAME"
-        value = join("-",["into365exch",each.key,"ghr"])
-      }  
-      env {
-        name = "ACCESS_TOKEN"
-        value = var.access_token
+      cpu    = 0.5
+      memory = 1.5
+      ports = {
+        https = {
+          port     = 443
+          protocol = "TCP"
+        }
       }
-      env {
-        name = "RUNNER_GROUP"
-        value = var.gh_runner_group_name
-      }
-      env {
-        name = "LABELS"
-        value = each.key
-      }
-      env {
-        name = "RUNNER_SCOPE"
-        value = var.gh_runner_scope
-      }
-      env {
-        name = "ORG_NAME"
-        value = var.gh_runner_org_name
-      }
-      env {
-        name = "DISABLE_AUTO_UPDATE"
-        value = "true"
+    }
+
+    cust = {
+      image  = var.aci_docker_image
+      cpu    = 0.5
+      memory = 1.5
+      ports = {
+        https = {
+          port     = 443
+          protocol = "TCP"
+        }
       }
     }
   }
+
+  env_vars = {
+    for_each = local.containers
+    ACCESS_TOKEN        = var.access_token
+    RUNNER_GROUP        = var.gh_runner_scope
+    LABELS              =  each.key
+    RUNNER_SCOPE        = var.gh_runner_scope
+    ORG_NAME            = var.gh_runner_org_name
+    DISABLE_AUTO_UPDATE = "true"
+  }
+   
 }
+
+
+output cont {
+  value = local.containers
+}
+
+output envs {
+  value = local.env_vars 
+}
+
+
+#resource "azurerm_container_group" "ucacg" {
+#  name                = "into365exch-ghr-acg"
+#  location            = data.azurerm_resource_group.ucgithubrunnerrg.location
+#  resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
+#  ip_address_type     = "Public"
+#  dns_name_label      = "aci-blog"
+#  os_type             = "Linux"
+#
+#  dynamic "container" {
+#    for_each = local.containers
+#
+#    content {
+#      name   = container.key
+#      image  = container.value.image
+#      cpu    = container.value.cpu
+#      memory = container.value.memory
+#
+#      dynamic "ports" {
+#        for_each = can(container.value.ports) ? container.value.ports : {}
+#
+#        content {
+#          port     = ports.value.port
+#          protocol = ports.value.protocol
+#        }
+#
+#      }
+#    }
+#  }
+#}
