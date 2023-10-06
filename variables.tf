@@ -42,8 +42,3 @@ variable "gh_runner_org_name" {
 variable "access_token" {
   description = "The Github PAT Token Used To Register The Runners"
 }
-
-variable "ghrunners" {
-  type=set(string)
-  default = toset(["infra","cust"])
-}

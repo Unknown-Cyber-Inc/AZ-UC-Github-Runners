@@ -39,7 +39,7 @@ resource "azurerm_container_app_environment" "ucacaenv" {
 }
 
 resource "azurerm_container_app" "ucaca" {
-  for_each                     = var.ghrunners
+  for_each                     = toset(["infra","cust"])
   name                         = join("-",["into365exch",each.key,"ghr"])
   container_app_environment_id = azurerm_container_app_environment.ucacaenv.id
   resource_group_name          = data.azurerm_resource_group.ucgithubrunnerrg.name
