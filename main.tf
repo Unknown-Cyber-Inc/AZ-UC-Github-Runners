@@ -51,6 +51,7 @@ locals {
           protocol = "TCP"
         }
       }
+      env =merge(local.env_vars,"LABELS=infra")
     }
 
     cust = {
