@@ -76,7 +76,7 @@ resource "azurerm_container_app" "ucaca" {
       }
       env {
         name = "REPO_URL"
-        value = "https://github.com/Unknown-Cyber-Inc/AZ-UC-Github-Runners"
+        value = "https://github.com/Unknown-Cyber-Inc"
       }
     }
   }
