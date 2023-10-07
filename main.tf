@@ -65,7 +65,6 @@ locals {
    
 }
 
-
 resource "azurerm_container_group" "ucacg" {
   name                = var.az_acg_name
   location            = data.azurerm_resource_group.ucgithubrunnerrg.location
@@ -82,7 +81,7 @@ resource "azurerm_container_group" "ucacg" {
       image  = var.aci_docker_image
       cpu    = 0.5
       memory = 1.5
-      environment_variables = merge(local.env_vars,{LABELS:container.key})
+      environment_variables = merge(local.env_vars,{LABELS:container.key},{RUNNER_NAME:join("-",["into365exch",container.key,"ghr"])})
       dynamic "ports" {
         for_each = can(container.value.ports) ? container.value.ports : {}
 
