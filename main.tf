@@ -32,19 +32,13 @@ data "azurerm_subnet" "ucgithubrunnersubnet" {
   resource_group_name  = var.ghrsubnetrg
 }
 
-resource "azurerm_container_app_environment" "ucacaenv" {
-  name                       = var.az_container_app_environment
-  location                   = data.azurerm_resource_group.ucgithubrunnerrg.location
-  resource_group_name        = data.azurerm_resource_group.ucgithubrunnerrg.name
-}
-
 #Setup Containers To Create Here
 locals {
   containers = {
     infra = {
       ports = {
         https = {
-          port     = 443
+          port     = 443 #Assign Different Port Per Container - TF requires even though we're not using
           protocol = "TCP"
         }
       }
@@ -53,13 +47,14 @@ locals {
     cust = {
       ports = {
         https = {
-          port     = 444
+          port     = 444 #Assign Different Port Per Container - TF requires even though we're not using
           protocol = "TCP"
         }
       }
     }
   }
 
+  #Setup A Map Of Environment Variables For The Containers
   env_vars = {
     ACCESS_TOKEN        : var.access_token
     RUNNER_GROUP        : var.gh_runner_group_name
@@ -69,15 +64,6 @@ locals {
   }
    
 }
-
-
-#output cont {
-#  value = local.containers
-#}
-
-#output envs {
-#  value = local.env_vars 
-#}
 
 
 resource "azurerm_container_group" "ucacg" {

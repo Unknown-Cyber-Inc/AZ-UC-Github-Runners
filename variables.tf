@@ -20,10 +20,6 @@ variable "aci_docker_image" {
     default = "myoung34/github-runner"
 }
 
-variable "az_container_app_environment" {
-  description = "The Name Of The Azure Container App Environment"
-}
-
 variable "gh_runner_group_name" {
     description = "The Name Of The Runner Group To Join The Runner To In Github"
     default = "into365exch-runners"
