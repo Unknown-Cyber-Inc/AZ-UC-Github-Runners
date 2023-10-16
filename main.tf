@@ -103,7 +103,7 @@ resource "azurerm_container_group" "ucacg" {
 }
 
 resource "azurerm_log_analytics_workspace" "ucghrlaw" {
-  name                = "ghr_law"
+  name                = "githubrunners-law"
   location            = data.azurerm_resource_group.ucgithubrunnerrg.location
   resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
   sku                 = "PerGB2018"
