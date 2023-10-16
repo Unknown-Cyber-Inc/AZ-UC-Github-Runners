@@ -93,4 +93,19 @@ resource "azurerm_container_group" "ucacg" {
       }
     }
   }
+  diagnostics {
+    log_analytics {
+      log_type = "ContainerInsights"
+      workspace_id = azurerm_log_analytics_workspace.ucghrlaw.id
+      workspace_key = azurerm_log_analytics_workspace.ucghrlaw.primary_shared_key
+    }
+  }
+}
+
+resource "azurerm_log_analytics_workspace" "ucghrlaw" {
+  name                = "ghr_law"
+  location            = data.azurerm_resource_group.ucgithubrunnerrg.location
+  resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
 }
