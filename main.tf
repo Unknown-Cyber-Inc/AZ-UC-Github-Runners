@@ -72,7 +72,13 @@ resource "azurerm_container_group" "ucacg" {
   ip_address_type     = "Private"
   subnet_ids          = [data.azurerm_subnet.ucgithubrunnersubnet.id]
   os_type             = "Linux"
-
+  
+  image_registry_credential {
+    username = "uccontainerregistry"
+    server = "uccontainerregistry.azurecr.io"
+    password = var.az_containerreg_password
+  }
+  
   dynamic "container" {
     for_each = local.containers
 

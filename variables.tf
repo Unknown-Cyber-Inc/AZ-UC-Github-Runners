@@ -17,7 +17,8 @@ variable "az_virtual_network_name" {
 
 variable "aci_docker_image" {
     description = "The Name Of The Image To Use For The Containers"
-    default = "myoung34/github-runner"
+    #default = "myoung34/github-runner"
+    default = "uccontainerregistry.azurecr.io/uc-ghe-runner:latest"
 }
 
 variable "gh_runner_group_name" {
@@ -41,4 +42,8 @@ variable "access_token" {
 
 variable "ghrsubnetrg"{
   description = "The Name Of The Resource Group That Contains The Subnet The Github Runner Will Be Running On"
+}
+
+variable "az_containerreg_password"{
+  description = "Password For The Az Container Registry"
 }
