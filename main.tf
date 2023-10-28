@@ -33,8 +33,8 @@ data "azurerm_subnet" "ucgithubrunnersubnet" {
 }
 
 data "azurerm_log_analytics_workspace" "ucintlaw"{
-  name                = var.az_law_rg_name
-  resource_group_name = var.az_law_name
+  name                = var.az_law_name
+  resource_group_name = var.az_law_rg_name
 }
 
 #Setup Containers To Create Here
