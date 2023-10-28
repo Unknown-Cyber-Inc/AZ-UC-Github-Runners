@@ -23,6 +23,8 @@ env:
   TF_VAR_az_virtual_network_name: ${{vars.AZ_VIRTUAL_NETWORK_NAME}}
   TF_VAR_ghrsubnetrg: ${{vars.GHRSUBNETRG}}
   TF_VAR_az_containerreg_password: ${{secrets.AZ_CONTAINERREG_PASSWORD}}
+  TF_VAR_az_law_rg_name: ${{vars.AZ_LAW_RG_NAME}}
+  TF_VAR_az_law_name: ${{vars.AZ_LAW_NAME}}
 
 jobs:
   build:

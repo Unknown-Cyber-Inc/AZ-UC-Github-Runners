@@ -47,3 +47,11 @@ variable "ghrsubnetrg"{
 variable "az_containerreg_password"{
   description = "Password For The Az Container Registry"
 }
+
+variable "az_law_rg_name" {
+  description = "Log Analytics Workspace Resource Group Name"
+}
+
+variable "az_law_name" {
+  description = "Log Analytics Workspace Name"
+}

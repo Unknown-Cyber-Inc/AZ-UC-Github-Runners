@@ -32,6 +32,11 @@ data "azurerm_subnet" "ucgithubrunnersubnet" {
   resource_group_name  = var.ghrsubnetrg
 }
 
+data "azurerm_log_analytics_workspace" "ucintlaw"{
+  name                = var.az_law_rg_name
+  resource_group_name = var.az_law_name
+}
+
 #Setup Containers To Create Here
 locals {
   containers = {
@@ -102,16 +107,16 @@ resource "azurerm_container_group" "ucacg" {
   diagnostics {
     log_analytics {
       log_type = "ContainerInsights"
-      workspace_id = azurerm_log_analytics_workspace.ucghrlaw.workspace_id
-      workspace_key = azurerm_log_analytics_workspace.ucghrlaw.primary_shared_key
+      workspace_id = data.azurerm_log_analytics_workspace.ucintlaw.workspace_id
+      workspace_key = data.azurerm_log_analytics_workspace.ucintlaw.primary_shared_key
     }
   }
 }
 
-resource "azurerm_log_analytics_workspace" "ucghrlaw" {
-  name                = "githubrunners-law"
-  location            = data.azurerm_resource_group.ucgithubrunnerrg.location
-  resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
-}
+#resource "azurerm_log_analytics_workspace" "ucghrlaw" {
+#  name                = "githubrunners-law"
+#  location            = data.azurerm_resource_group.ucgithubrunnerrg.location
+#  resource_group_name = data.azurerm_resource_group.ucgithubrunnerrg.name
+#  sku                 = "PerGB2018"
+#  retention_in_days   = 30
+#}
